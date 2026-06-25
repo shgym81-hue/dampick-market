@@ -131,3 +131,113 @@ main, .cart-page, .checkout-page, .pickup-page, .my-page { padding-bottom: 150px
   font-weight: 800;
   padding-bottom: 14px;
 }
+/* =========================
+   DAMPICK 핑크 테마 변경
+   ========================= */
+
+:root {
+  --main-pink: #f6a8bd;
+  --deep-pink: #e96a9b;
+  --hot-pink: #e83e8c;
+  --soft-pink: #fff1f6;
+  --light-pink: #ffe3ec;
+  --text-pink: #b83265;
+}
+
+/* 전체 배경 */
+body {
+  background: #fff1f6;
+}
+
+/* 앱 전체 배경 */
+.phone-shell {
+  background: #fff7fa;
+}
+
+/* 상단 헤더 보라색 → 핑크색 */
+.topbar {
+  background: linear-gradient(180deg, #f48fb1 0%, #ec6fa2 100%) !important;
+}
+
+/* 상단 글씨 */
+.status-row,
+.brand-row,
+.location,
+.tabs,
+.tab {
+  color: #ffffff !important;
+}
+
+/* 카테고리 선택 밑줄 */
+.tab.active::after {
+  background: #ffffff !important;
+}
+
+/* 메인 배너 주변 */
+.hero-card {
+  background: #ffe3ec;
+  box-shadow: 0 8px 24px rgba(232, 62, 140, 0.18);
+}
+
+/* 공지 영역 */
+.notice {
+  background: #fff7fa;
+  color: #9c2f5c;
+  border-top: 1px solid #ffd4e2;
+  border-bottom: 1px solid #ffd4e2;
+}
+
+/* 상품 가격 */
+.product-price,
+.price,
+.product-card strong,
+#cartTotal {
+  color: #c2185b !important;
+}
+
+/* 결제하기 버튼 */
+.primary-btn,
+#goCheckoutBtn {
+  background: linear-gradient(135deg, #f48fb1 0%, #e83e8c 100%) !important;
+  color: #ffffff !important;
+  box-shadow: 0 8px 18px rgba(232, 62, 140, 0.28);
+}
+
+/* 하단 결제바 */
+.bottom-paybar {
+  background: rgba(255, 247, 250, 0.94);
+  border-top: 1px solid #ffd4e2;
+}
+
+/* 하단 메뉴 */
+.bottom-nav {
+  background: linear-gradient(180deg, #f48fb1 0%, #e96a9b 100%) !important;
+}
+
+.nav-item {
+  color: rgba(255, 255, 255, 0.82) !important;
+}
+
+.nav-item.active {
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff !important;
+}
+
+/* 장바구니 뱃지 */
+#cartBadge,
+.nav-item em {
+  background: #ff7aa8 !important;
+  color: #ffffff !important;
+}
+
+/* 상품 카드 구분선 */
+.product-card,
+.product-item {
+  border-bottom: 1px solid #ffe1eb;
+}
+
+/* 좋아요 하트 */
+.heart,
+.status-icons {
+  color: #ffffff !important;
+}
