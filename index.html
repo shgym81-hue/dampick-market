@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>DAMPICK 공동구매 마켓</title>
+  <meta name="description" content="단픽 공동구매 마켓 - 과일, 밀키트, 생활상품을 픽업 예약하고 간편 결제하세요." />
+  <meta property="og:title" content="DAMPICK 공동구매 마켓" />
+  <meta property="og:description" content="오늘 올라온 공동구매 상품을 확인하고 바로 예약/결제하세요." />
+  <meta property="og:image" content="assets/storefront.jpg" />
+  <meta property="og:type" content="website" />
+  <meta name="theme-color" content="#A428B6" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="phone-shell">
+    <header class="topbar">
+      <div class="status-row">
+        <span>단픽 공동구매</span>
+        <span class="status-icons">♡</span>
+      </div>
+      <button class="location" id="locationBtn" type="button">📍 탑프레부동산(안양어반포레) ▾</button>
+      <nav class="tabs" aria-label="상품 분류">
+        <button class="tab active" data-category="전체">전체</button>
+        <button class="tab" data-category="과일">과일</button>
+        <button class="tab" data-category="밀키트">밀키트</button>
+        <button class="tab" data-category="기타">기타</button>
+      </nav>
+    </header>
+
+    <main id="mainView">
+      <section class="hero-card">
+        <img src="assets/storefront.jpg" alt="DAMPICK 매장 정면" />
+        <div class="hero-text">
+          <strong>함께 담다, 단픽</strong>
+          <span>오늘 주문 · 내일 픽업</span>
+        </div>
+      </section>
+
+      <section class="notice" id="noticeBar">
+        <span>📣 결제 오류 공지</span>
+        <span>›</span>
+      </section>
+
+      <section class="product-list" id="productList" aria-label="상품 목록"></section>
+    </main>
+
+    <section class="cart-page hidden" id="cartPage" aria-label="장바구니"></section>
+    <section class="checkout-page hidden" id="checkoutPage" aria-label="결제하기"></section>
+    <section class="pickup-page hidden" id="pickupPage" aria-label="픽업 예정"></section>
+    <section class="my-page hidden" id="myPage" aria-label="마이페이지"></section>
+
+    <div class="bottom-paybar" id="paybar">
+      <button class="cart-summary" id="openCartBtn" type="button">
+        <span class="card-icon">▰</span>
+        <strong id="cartTotal">0원</strong>
+      </button>
+      <button class="primary-btn" id="goCheckoutBtn" type="button">결제하기</button>
+    </div>
+
+    <nav class="bottom-nav" aria-label="하단 메뉴">
+      <button class="nav-item active" data-page="home" type="button">⌂<span>홈</span></button>
+      <button class="nav-item" data-page="cart" type="button">🛒<em id="cartBadge">0</em><span>장바구니</span></button>
+      <button class="nav-item" data-page="pickup" type="button">▣<span>픽업예정</span></button>
+      <button class="nav-item" data-page="my" type="button">●<span>마이</span></button>
+    </nav>
+  </div>
+
+  <div class="toast hidden" id="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
