@@ -122,8 +122,7 @@ function renderProducts() {
           </div>
           <p class="meta">픽업: ${p.pickup}</p>
 
-<p class="meta">${p.soldout ? "다음 주문 대기 상품" : `남은 수량: ${p.remain}개`}</p>
-
+          ${p.soldout ? "" : `<p class="meta remain-count">남은 수량: ${p.remain}개</p>`}
 <div class="qty-line">
 
 <strong class="price">${won(p.price)}</strong>
