@@ -183,6 +183,8 @@ function renderCart() {
 
 function renderCheckout() {
   const items = getCartItems();
+  const pickupText = [...new Set(items.map(item => item.pickup))].join(" / ");
+
   if (!items.length) {
     checkoutPage.innerHTML = pageTitle("결제하기") + emptyBox("결제할 상품이 없습니다", "상품을 먼저 담아 주세요.");
     return;
@@ -198,7 +200,7 @@ function renderCheckout() {
     </div>
     <div class="checkout-block">
       <div class="checkout-label">픽업일</div>
-      <div class="checkout-field">내일 픽업(06월26일)</div>
+      <div class="checkout-field">${pickupText}</div>
     </div>
     <div class="list-panel">
       ${items.map(item => `
@@ -301,13 +303,16 @@ document.addEventListener("click", (event) => {
     setPage("checkout");
   }
   if (event.target.id === "completePayBtn") {
-    const orders = JSON.parse(localStorage.getItem("dampick_orders") || "[]");
-    orders.unshift({
-      no: Date.now().toString().slice(-6),
-      date: "내일 픽업(06월26일)",
-      items: getCartItems().map(({name, qty}) => ({name, qty})),
-      total: getTotal()
-    });
+  const items = getCartItems();
+  const pickupText = [...new Set(items.map(item => item.pickup))].join(" / ");
+  const orders = JSON.parse(localStorage.getItem("dampick_orders") || "[]");
+
+  orders.unshift({
+    no: Date.now().toString().slice(-6),
+    date: pickupText,
+    items: items.map(({name, qty}) => ({name, qty})),
+    total: getTotal()
+  });
     localStorage.setItem("dampick_orders", JSON.stringify(orders));
     cart = {};
     saveCart();
