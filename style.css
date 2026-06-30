@@ -241,3 +241,33 @@ body {
 .status-icons {
   color: #ffffff !important;
 }
+/* 탭 2개 구조로 변경 */
+.tabs {
+  grid-template-columns: repeat(2, 1fr) !important;
+}
+
+.tab {
+  font-size: 18px;
+  font-weight: 900;
+  padding: 15px 0 16px;
+}
+
+.tab.active::after {
+  left: 24%;
+  right: 24%;
+  height: 4px;
+}
+
+/* 주문 마감 표시 */
+.soldout {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 11px;
+  border-radius: 999px;
+  background: #ffe3ec;
+  color: #c2185b;
+  font-size: 14px;
+  font-weight: 900;
+  white-space: nowrap;
+}
