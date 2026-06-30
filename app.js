@@ -67,7 +67,7 @@ const products = [
   }
 ];
 
-let currentCategory = "전체";
+let currentCategory = "주문가능";
 let currentPage = "home";
 let cart = JSON.parse(localStorage.getItem("dampick_cart") || "{}");
 
@@ -109,7 +109,11 @@ function updateSummary() {
 }
 
 function renderProducts() {
-  const list = products.filter(p => currentCategory === "전체" || p.category === currentCategory);
+  const list = products.filter(p => {
+  if (currentCategory === "주문가능") return !p.soldout;
+  if (currentCategory === "주문마감") return p.soldout;
+  return !p.soldout;
+});
   productList.innerHTML = list.map(p => {
     const qty = cart[p.id] || 0;
     return `
