@@ -9,10 +9,10 @@ const products = [
     id: 1,
     category: "밀키트",
     name: "더진한 마라탕 (880g/냉장) 1팩",
-    pickup: "7/9(금) 픽업",
+    pickup: "7/3(금) 픽업",
     remain: 0,
+    state: "마감",
     price: 17900,
-    soldout: true,
     image: "assets/product-marathon.svg"
   },
   {
@@ -21,48 +21,48 @@ const products = [
     name: "강릉댁 서래기코다리(냉동) 1팩 (900g)",
     pickup: "7/10(금) 픽업",
     remain: 0,
+    state: "마감",
     price: 10900,
-    soldout: true,
     image: "assets/product-fish.svg"
   },
   {
     id: 3,
     category: "밀키트",
     name: "강릉댁 봉봉쭈꾸미(냉동) 1팩 (600g/2인)",
-    pickup: "내일(금) 픽업",
+    pickup: "7/3(금) 픽업",
     remain: 0,
+    state: "마감",
     price: 11900,
-    soldout: true,
     image: "assets/product-octopus.svg"
   },
   {
     id: 4,
     category: "기타",
     name: "라이스 브리또 (냉동) 5개 세트",
-    pickup: "내일(금) 픽업",
+    pickup: "7/3(금) 픽업",
     remain: 8,
+    state: "판매중",
     price: 13900,
-    soldout: false,
     image: "assets/product-burrito.svg"
   },
   {
     id: 5,
     category: "과일",
     name: "초당옥수수(국산) 1봉(5개)",
-    pickup: "내일(금) 픽업",
+    pickup: "7/3(금) 픽업",
     remain: 12,
+    state: "판매중",
     price: 5900,
-    soldout: false,
     image: "assets/product-corn.svg"
   },
   {
     id: 6,
     category: "밀키트",
     name: "세월낙지 낙지볶음 (450g/냉동) 1팩",
-    pickup: "내일(금) 픽업",
+    pickup: "7/3(금) 픽업",
     remain: 6,
+    state: "판매중",
     price: 10000,
-    soldout: false,
     image: "assets/product-nakji.svg"
   }
 ];
@@ -86,6 +86,10 @@ function won(value) {
   return value.toLocaleString("ko-KR") + "원";
 }
 
+function isOrderable(product) {
+  return product.state === "판매중" && product.remain > 0;
+}
+
 function saveCart() {
   localStorage.setItem("dampick_cart", JSON.stringify(cart));
   updateSummary();
@@ -94,7 +98,7 @@ function saveCart() {
 function getCartItems() {
   return Object.entries(cart)
     .map(([id, qty]) => ({ ...products.find(p => p.id === Number(id)), qty }))
-    .filter(item => item.id && item.qty > 0);
+    .filter(item => item.id && item.qty > 0 && isOrderable(item));
 }
 
 function getTotal() {
@@ -110,9 +114,9 @@ function updateSummary() {
 
 function renderProducts() {
   const list = products.filter(p => {
-  if (currentCategory === "주문가능") return !p.soldout;
-  if (currentCategory === "주문마감") return p.soldout;
-  return !p.soldout;
+  if (currentCategory === "주문가능") return p.state !== "픽업완료";
+  if (currentCategory === "주문마감") return p.state === "픽업완료";
+  return p.state !== "픽업완료";
 });
   productList.innerHTML = list.map(p => {
     const qty = cart[p.id] || 0;
@@ -124,15 +128,13 @@ function renderProducts() {
             <h2 class="product-title">${p.name}</h2>
             <button class="heart" type="button" aria-label="찜하기">♡</button>
           </div>
-          <p class="meta">픽업: ${p.pickup}</p>
+         <p class="meta pickup-date">${p.pickup}</p>
 
-          ${p.soldout ? "" : `<p class="meta remain-count">남은 수량: ${p.remain}개</p>`}
+${isOrderable(p) ? `<p class="meta remain-count">남은 수량: ${p.remain}개</p>` : ""}
+
 <div class="qty-line">
-
-<strong class="price">${won(p.price)}</strong>
-
-${p.soldout ? `<span class="soldout">주문 마감</span>` : stepper(p.id, qty)}
-
+  <strong class="price">${won(p.price)}</strong>
+  ${isOrderable(p) ? stepper(p.id, qty) : `<span class="soldout">주문 마감</span>`}
 </div>
         </div>
       </article>
@@ -149,7 +151,7 @@ function stepper(id, qty) {
 
 function changeQty(id, delta) {
   const product = products.find(p => p.id === id);
-  if (!product || product.soldout) return;
+  if (!product || !isOrderable(product)) return;
   const next = Math.max(0, Math.min(product.remain, (cart[id] || 0) + delta));
   if (next === 0) delete cart[id];
   else cart[id] = next;
@@ -326,6 +328,9 @@ document.querySelectorAll(".tab").forEach(tab => {
     renderProducts();
   });
 });
+
+renderProducts();
+updateSummary();
 
 renderProducts();
 updateSummary();
