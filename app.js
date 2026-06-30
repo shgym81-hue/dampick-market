@@ -331,6 +331,3 @@ document.querySelectorAll(".tab").forEach(tab => {
 
 renderProducts();
 updateSummary();
-
-renderProducts();
-updateSummary();
