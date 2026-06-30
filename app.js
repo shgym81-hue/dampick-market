@@ -120,12 +120,17 @@ function renderProducts() {
             <h2 class="product-title">${p.name}</h2>
             <button class="heart" type="button" aria-label="찜하기">♡</button>
           </div>
-          <p class="meta">${p.pickup}</p>
-          <p class="meta">잔여: ${p.remain}</p>
-          <div class="qty-line">
-            <strong class="price">${won(p.price)}</strong>
-            ${p.soldout ? `<span class="soldout">품절</span>` : stepper(p.id, qty)}
-          </div>
+          <p class="meta">픽업: ${p.pickup}</p>
+
+<p class="meta">${p.soldout ? "다음 주문 대기 상품" : `남은 수량: ${p.remain}개`}</p>
+
+<div class="qty-line">
+
+<strong class="price">${won(p.price)}</strong>
+
+${p.soldout ? `<span class="soldout">주문 마감</span>` : stepper(p.id, qty)}
+
+</div>
         </div>
       </article>
     `;
