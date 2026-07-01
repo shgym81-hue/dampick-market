@@ -90,6 +90,10 @@ function isOrderable(product) {
   return product.state === "판매중" && product.remain > 0;
 }
 
+function canSelectQty(product) {
+  return currentCategory !== "주문마감" && isOrderable(product);
+}
+
 function saveCart() {
   localStorage.setItem("dampick_cart", JSON.stringify(cart));
   updateSummary();
@@ -130,11 +134,10 @@ function renderProducts() {
           </div>
          <p class="meta pickup-date">${p.pickup}</p>
 
-${isOrderable(p) ? `<p class="meta remain-count">남은 수량: ${p.remain}개</p>` : ""}
-
+${canSelectQty(p) ? `<p class="meta remain-count">남은 수량: ${p.remain}개</p>` : ""}
 <div class="qty-line">
   <strong class="price">${won(p.price)}</strong>
-  ${isOrderable(p) ? stepper(p.id, qty) : `<span class="soldout">주문 마감</span>`}
+  ${canSelectQty(p) ? stepper(p.id, qty) : `<span class="soldout">주문 마감</span>`}
 </div>
         </div>
       </article>
@@ -151,7 +154,7 @@ function stepper(id, qty) {
 
 function changeQty(id, delta) {
   const product = products.find(p => p.id === id);
-  if (!product || !isOrderable(product)) return;
+  if (!product || !isOrderable(product) || currentCategory === "주문마감") return;
   const next = Math.max(0, Math.min(product.remain, (cart[id] || 0) + delta));
   if (next === 0) delete cart[id];
   else cart[id] = next;
